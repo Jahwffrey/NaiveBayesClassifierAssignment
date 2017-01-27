@@ -26,8 +26,8 @@ int main(int argc,char** argv){
 		Review* current = new Review(rev, type);		
 
 		string wrd;
-		while(current->next_word(wrd)){
-			cout << wrd << endl;
+		while(current->next_word(wrd,1)){
+			cout << wrd << "!" << endl;
 		}
 
 		delete(current);

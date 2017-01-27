@@ -33,14 +33,24 @@ Review::Review(string txt,int type){
 	this->len = txt.length() - 2;
 }
 
-bool Review::next_word(string &out){
+bool Review::next_word(string &out, int word_num){
 	out = "";
 	if(head >= len) return false;
-	while(head < len && text[head] != ' '){
-		if(check_char(text[head])) out = out + text[head];
-		head++;
+	int word_count = 0;
+	int index = head;
+	while(word_count < word_num){
+		char c = text[index];
+		if(c == ' '){
+			if(word_count == 0) head = index + 1;
+			word_count += 1;
+		}
+		if(check_char(c) && word_count < word_num) out = out + c;
+		index++;
+		if(index == len - 1){
+			word_count = word_num;
+			if(check_char(text[index])) out = out + text[index];
+			head = index + 1;
+		}
 	}
-	out = out + "!";
-	head++;
 	return true;
 }
