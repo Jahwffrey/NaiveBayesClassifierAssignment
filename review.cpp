@@ -39,7 +39,7 @@ bool Review::next_word(string &out, int word_num){
 	int word_count = 0;
 	int index = head;
 	while(word_count < word_num){
-		char c = text[index];
+		char c = tolower(text[index]);
 		if(c == ' '){
 			if(word_count == 0) head = index + 1;
 			word_count += 1;
@@ -47,8 +47,9 @@ bool Review::next_word(string &out, int word_num){
 		if(check_char(c) && word_count < word_num) out = out + c;
 		index++;
 		if(index == len - 1){
+			c = tolower(text[index]);
 			word_count = word_num;
-			if(check_char(text[index])) out = out + text[index];
+			if(check_char(c)) out = out + c;
 			head = index + 1;
 		}
 	}
