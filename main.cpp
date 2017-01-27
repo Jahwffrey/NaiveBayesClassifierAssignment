@@ -1,27 +1,13 @@
+//John Thomason
+//ID 3058344
+
 #include <fstream>
 #include <iostream>
 #include <string>
+#include "review.h"
 using namespace std;
 
-class Review{
- private:
-	string text;
-	int type;
-	int head;
- public:
-	bool next_word(string out);
-	Review(string txt,int type);
-};
-
-Review::Review(string txt,int type){
-	this->text = txt;
-	this->type = type;
-}
-
-bool Review::next_word(string out){
-	out = "Wow!";
-	return false;
-}
+//I HAVE <br /> problems!!!!
 
 int main(int argc,char** argv){
 	if(argc != 3){
@@ -34,6 +20,7 @@ int main(int argc,char** argv){
 	//Read in lines
 	std::string rev;
 	while(getline(train_file,rev)){
+		//rev.replace(rev.begin(),rev.end(),"<br />"," ");
 		int len = rev.length();
 		int type = rev[len - 1];
 		Review* current = new Review(rev, type);		
@@ -42,7 +29,6 @@ int main(int argc,char** argv){
 		while(current->next_word(wrd)){
 			cout << wrd << endl;
 		}
-		cout << "Lol" << endl;
 
 		delete(current);
 	}	

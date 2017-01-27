@@ -1,7 +1,14 @@
 all: main	
 
-main: main.cpp
-	g++ main.cpp -o NaiveBayesClassifier
+main: main.o review.o
+	g++ main.o review.o -o NaiveBayesClassifier
+
+main.o: main.cpp review.h
+	g++ -c main.cpp
+
+review.o: review.cpp review.h
+	g++ -c review.cpp
 
 clean:
 	rm NaiveBayesClassifier
+	rm *.o
