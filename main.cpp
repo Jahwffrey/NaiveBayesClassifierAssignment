@@ -8,7 +8,7 @@
 #include "review.h"
 #include "trie.h"
 
-#define WORDNUM 1
+#define WORDNUM 3
 using namespace std;
 
 //Consider sorting tries
