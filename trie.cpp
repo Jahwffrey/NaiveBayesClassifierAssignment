@@ -83,5 +83,5 @@ double Trie::get_pos_prob(){
 	return prob[1];
 }
 double Trie::get_neg_prob(){
-	return prob[2];
+	return prob[0];
 }

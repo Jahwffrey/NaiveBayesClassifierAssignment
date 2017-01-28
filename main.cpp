@@ -34,6 +34,8 @@ int main(int argc,char** argv){
 
 	ifstream train_file(argv[1]);
 	ifstream test_file(argv[2]);
+	int correct_num = 0;
+	int incorrect_num = 0;
 	
 	int docs[2];
 	docs[0] = 0;
@@ -70,7 +72,6 @@ int main(int argc,char** argv){
 		
 		//Extracting for now, not used in classifying
 		int type = rev[len - 1] -'0';
-		docs[type] += 1;
 		Review* current = new Review(rev, type);		
 
 		double pos_prob = 0;
@@ -87,12 +88,20 @@ int main(int argc,char** argv){
 		}
 
 		int most_probable_type = 0;
-		if(pos_prob > neg_prob) most_probable_type = 1;
+		if(pos_prob < neg_prob) most_probable_type = 1;
 
 		cout << "P: " << pos_prob << ", N: " << neg_prob << " -> " << most_probable_type << " vs " << type << "\n";
 
+		if(most_probable_type == type){
+			correct_num += 1;
+		} else {
+			incorrect_num += 1;
+		}
+
 		delete(current);
 	}
+
+	cout << "Success Percentage: " << 100 * (double)correct_num / (double)(correct_num + incorrect_num) << "\n";
 
 	return 1;
 }
