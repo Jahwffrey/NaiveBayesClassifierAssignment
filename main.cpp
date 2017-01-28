@@ -15,20 +15,23 @@ class Trie{
  private:
 	char letter;
 	vector<Trie *> childs;
-	int docs[2];
+	int docs_letters[2];
+	int docs_words[2];
 	Trie* get_child(char c);
 	Trie* make_child(char c);
  public:
 	Trie(char c);
 	Trie* add_word(string word,int type);
 	Trie* get_word(string word);
-	void add_type(int type);
+	void get_type(int type);
 };
 
 Trie::Trie(char c){
 	this->letter = c;
-	this->docs[0] = 0;
-	this->docs[1] = 0;
+	this->docs_letters[0] = 0;
+	this->docs_words[0] = 0;
+	this->docs_letters[1] = 0;
+	this->docs_words[1] = 0;
 }
 
 Trie* Trie::get_child(char c){
@@ -45,7 +48,26 @@ Trie* Trie::make_child(char c){
 }
 
 Trie* Trie::add_word(string word,int type){
-	
+	docs_letters[type] += 1;
+	if(word.length() == 0){
+		docs_words[type] += 1;
+		return this;
+	} else {
+		char c = word[0];
+		Trie* t = get_child(c);
+		if(t == NULL) t = make_child(c);
+		word.erase(word.begin());
+		return add_word(word,type);
+	}
+}
+
+Trie* Trie::get_word(string word){
+	if(word.length() == 0) return this;
+	char c = word[0];
+	Trie* t = get_child(c);
+	if(t == NULL) return NULL;
+	word.erase(word.begin());
+	return get_word(word);
 }
 
 int main(int argc,char** argv){
@@ -55,10 +77,10 @@ int main(int argc,char** argv){
 	}
 
 	ifstream train_file(argv[1]);
-
 	int docs[2];
 	docs[0] = 0;
 	docs[1] = 0;
+	Trie* trie = new Trie('_');
 
 	//Read in lines
 	std::string rev;
@@ -71,7 +93,7 @@ int main(int argc,char** argv){
 
 		string wrd;
 		while(current->next_word(wrd,1)){
-			cout << wrd << "!" << endl;
+			trie -> add_word(wrd,type);
 		}
 
 		delete(current);
