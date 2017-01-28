@@ -24,6 +24,7 @@ class Trie{
 	Trie* add_word(string word,int type);
 	Trie* get_word(string word);
 	void get_type(int type);
+	void print(string str);
 };
 
 Trie::Trie(char c){
@@ -57,7 +58,7 @@ Trie* Trie::add_word(string word,int type){
 		Trie* t = get_child(c);
 		if(t == NULL) t = make_child(c);
 		word.erase(word.begin());
-		return add_word(word,type);
+		return t->add_word(word,type);
 	}
 }
 
@@ -67,7 +68,15 @@ Trie* Trie::get_word(string word){
 	Trie* t = get_child(c);
 	if(t == NULL) return NULL;
 	word.erase(word.begin());
-	return get_word(word);
+	return t->get_word(word);
+}
+
+void Trie::print(string str){
+	str = str + letter;
+	cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] << " Letters: " << docs_letters[0] << ", " << docs_letters[1] << "\n";
+	for(int i = 0;i < childs.size();i++){
+		childs[i] -> print(str);
+	}
 }
 
 int main(int argc,char** argv){
@@ -87,7 +96,7 @@ int main(int argc,char** argv){
 	while(getline(train_file,rev)){
 		//rev.replace(rev.begin(),rev.end(),"<br />"," ");
 		int len = rev.length();
-		int type = rev[len - 1];
+		int type = rev[len - 1] -'0';
 		docs[type] += 1;
 		Review* current = new Review(rev, type);		
 
@@ -98,6 +107,8 @@ int main(int argc,char** argv){
 
 		delete(current);
 	}	
+
+	trie->print("");
 
 	return 1;
 }
