@@ -9,8 +9,19 @@
 #include "trie.h"
 using namespace std;
 
-//I HAVE <br /> problems!!!!
 //Consider sorting tries
+
+void remove_br(string &str){
+	for(int i = 0;i < str.length();i++){
+		if(str[i] == '<'){
+			//if(str.length() - i > 6){
+				if(str[i + 1] == 'b' && str[i + 2] == 'r'){
+					str.erase(i,5);
+				}
+			//}
+		}
+	}
+}
 
 int main(int argc,char** argv){
 	if(argc != 3){
@@ -27,7 +38,7 @@ int main(int argc,char** argv){
 	//Read in lines
 	std::string rev;
 	while(getline(train_file,rev)){
-		//rev.replace(rev.begin(),rev.end(),"<br />"," ");
+		remove_br(rev);
 		int len = rev.length();
 		int type = rev[len - 1] -'0';
 		docs[type] += 1;

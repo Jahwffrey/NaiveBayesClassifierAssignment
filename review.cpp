@@ -6,7 +6,8 @@
 using namespace std;
 
 bool Review::check_char(char c){
-	switch(c){
+	return(c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+	/*switch(c){
 		case '!':
 		case '.':
 		case ',':
@@ -27,7 +28,7 @@ bool Review::check_char(char c){
 			return false;
 		default:
 			return true;
-	}
+	}*/
 }
 
 
