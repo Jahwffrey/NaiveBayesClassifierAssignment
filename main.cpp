@@ -12,16 +12,18 @@
 using namespace std;
 
 //Consider sorting tries
+//Push to github!!
 //Actually account for zero probabilities! Smoothing!
+
 
 void remove_br(string &str){
 	for(int i = 0;i < str.length();i++){
 		if(str[i] == '<'){
-			//if(str.length() - i > 6){
+			if(str.length() - i > 6){
 				if(str[i + 1] == 'b' && str[i + 2] == 'r'){
 					str.erase(i,5);
 				}
-			//}
+			}
 		}
 	}
 }
@@ -84,6 +86,10 @@ int main(int argc,char** argv){
 			if(data != NULL){
 				pos_prob += data->get_pos_prob();
 				neg_prob += data->get_neg_prob();
+				
+				//REPLACE THIS WITH THE ACTUAL SMOOTHING YOU FOUND!!
+				if(data->get_pos_prob() == 0) pos_prob += 5;
+				if(data->get_neg_prob() == 0) neg_prob += 5;
 			}
 		}
 
