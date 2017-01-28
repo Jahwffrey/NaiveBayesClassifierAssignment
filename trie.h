@@ -23,6 +23,8 @@ class Trie{
 	void print(string str);
 	void print_probs(string str);
 	void calc_data(int pos_num,int neg_num);
+	double get_pos_prob();
+	double get_neg_prob();
 };
 
 #endif

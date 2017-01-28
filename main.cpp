@@ -7,6 +7,8 @@
 #include <vector>
 #include "review.h"
 #include "trie.h"
+
+#define WORDNUM 1
 using namespace std;
 
 //Consider sorting tries
@@ -31,12 +33,14 @@ int main(int argc,char** argv){
 	}
 
 	ifstream train_file(argv[1]);
+	ifstream test_file(argv[2]);
+	
 	int docs[2];
 	docs[0] = 0;
 	docs[1] = 0;
 	Trie* trie = new Trie('_');
 
-	//Read in lines
+	//Train
 	std::string rev;
 	while(getline(train_file,rev)){
 		remove_br(rev);
@@ -46,7 +50,7 @@ int main(int argc,char** argv){
 		Review* current = new Review(rev, type);		
 
 		string wrd;
-		while(current->next_word(wrd,1)){
+		while(current->next_word(wrd,WORDNUM)){
 			trie -> add_word(wrd,type);
 		}
 
@@ -54,8 +58,41 @@ int main(int argc,char** argv){
 	}
 
 	trie->calc_data(docs[1],docs[0]);
+	//trie->print_probs("");
 
-	trie->print_probs("");
+	//Validate
+		//Nothing!
+
+	//Test
+	while(getline(test_file,rev)){
+		remove_br(rev);
+		int len = rev.length();
+		
+		//Extracting for now, not used in classifying
+		int type = rev[len - 1] -'0';
+		docs[type] += 1;
+		Review* current = new Review(rev, type);		
+
+		double pos_prob = 0;
+		double neg_prob = 0;
+		string wrd;
+
+		//classify
+		while(current->next_word(wrd,WORDNUM)){
+			Trie* data = trie->get_word(wrd);
+			if(data != NULL){
+				pos_prob += data->get_pos_prob();
+				neg_prob += data->get_neg_prob();
+			}
+		}
+
+		int most_probable_type = 0;
+		if(pos_prob > neg_prob) most_probable_type = 1;
+
+		cout << "P: " << pos_prob << ", N: " << neg_prob << " -> " << most_probable_type << " vs " << type << "\n";
+
+		delete(current);
+	}
 
 	return 1;
 }

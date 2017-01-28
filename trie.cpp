@@ -78,3 +78,10 @@ void Trie::print_probs(string str){
 		childs[i] -> print_probs(str);
 	}
 }
+
+double Trie::get_pos_prob(){
+	return prob[1];
+}
+double Trie::get_neg_prob(){
+	return prob[2];
+}
