@@ -10,6 +10,7 @@
 using namespace std;
 
 //Consider sorting tries
+//Actually account for zero probabilities! Smoothing!
 
 void remove_br(string &str){
 	for(int i = 0;i < str.length();i++){
@@ -50,9 +51,11 @@ int main(int argc,char** argv){
 		}
 
 		delete(current);
-	}	
+	}
 
-	trie->print("");
+	trie->calc_data(docs[1],docs[0]);
+
+	trie->print_probs("");
 
 	return 1;
 }

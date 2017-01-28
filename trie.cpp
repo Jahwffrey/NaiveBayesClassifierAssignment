@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "trie.h"
+#include <math.h>
 
 using namespace std;
 
@@ -10,6 +11,8 @@ Trie::Trie(char c){
 	this->docs_words[0] = 0;
 	this->docs_letters[1] = 0;
 	this->docs_words[1] = 0;
+	this->prob[0] = 0;
+	this->prob[1] = 0;
 }
 
 Trie* Trie::get_child(char c){
@@ -48,10 +51,30 @@ Trie* Trie::get_word(string word){
 	return t->get_word(word);
 }
 
+void Trie::calc_data(int pos_num,int neg_num){
+	if(docs_words[0] != 0) prob[0] = log10 ( (double)docs_words[0] / (double)neg_num );
+	//if(docs_words[0] != 0) prob[0] = (double)docs_words[0] / (double)neg_num;
+	if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
+	//if(docs_words[1] != 0) prob[1] = (double)docs_words[1] / (double)pos_num;
+	for(int i = 0;i < childs.size();i++){
+		childs[i] -> calc_data(pos_num,neg_num);
+	}
+}
+
 void Trie::print(string str){
 	str = str + letter;
 	cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] << " Letters: " << docs_letters[0] << ", " << docs_letters[1] << "\n";
 	for(int i = 0;i < childs.size();i++){
 		childs[i] -> print(str);
+	}
+}
+
+void Trie::print_probs(string str){
+	str = str + letter;
+	if(docs_words[0] != 0 || docs_words[1] != 0){
+		cout << str + " - N: " << prob[0] << " P: " << prob[1] << endl;
+	}
+	for(int i = 0;i < childs.size();i++){
+		childs[i] -> print_probs(str);
 	}
 }
