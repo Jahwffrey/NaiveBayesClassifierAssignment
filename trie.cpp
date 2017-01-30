@@ -77,7 +77,9 @@ void Trie::calc_data(int pos_num,int neg_num,int wordnum){
 
 void Trie::print(string str){
 	str = str + letter;
-	cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] <<"\n";
+	if(docs_words[0] != 0 || docs_words[1] != 0){
+		cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] <<"\n";
+	}
 	for(int i = 0;i < childs.size();i++){
 		childs[i] -> print(str);
 	}

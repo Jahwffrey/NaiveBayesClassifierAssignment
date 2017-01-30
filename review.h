@@ -6,13 +6,12 @@
 class Review{
  private:
 	std::string text;
-	int type;
 	int head;
 	int len;
 	bool check_char(char c);
  public:
 	bool next_word(std::string &out,int word_num);
-	Review(std::string txt,int type);
+	Review(std::string txt);
 };
 
 #endif

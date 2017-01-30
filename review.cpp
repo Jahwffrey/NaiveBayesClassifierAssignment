@@ -7,34 +7,11 @@ using namespace std;
 
 bool Review::check_char(char c){
 	return(c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
-	/*switch(c){
-		case '!':
-		case '.':
-		case ',':
-		case '?':
-		case '>':
-		case '<':
-		case '/':
-		case '(':
-		case ')':
-		case ':':
-		case ';':
-		case '"':
-		case '{':
-		case '}':
-		case '[':
-		case ']':
-		case '=':
-			return false;
-		default:
-			return true;
-	}*/
 }
 
 
-Review::Review(string txt,int type){
+Review::Review(string txt){
 	this->text = txt;
-	this->type = type;
 	this->head = 0;
 	this->len = txt.length() - 2;
 }
