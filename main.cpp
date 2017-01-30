@@ -13,7 +13,6 @@ using namespace std;
 
 //Consider sorting tries
 //Push to github!!
-//Actually account for zero probabilities! Smoothing!
 
 
 void remove_br(string &str){
@@ -61,7 +60,7 @@ int main(int argc,char** argv){
 		delete(current);
 	}
 
-	trie->calc_data(docs[1],docs[0]);
+	trie->calc_data(docs[1],docs[0],0);
 	//trie->print_probs("");
 
 	//Validate
@@ -86,15 +85,11 @@ int main(int argc,char** argv){
 			if(data != NULL){
 				pos_prob += data->get_pos_prob();
 				neg_prob += data->get_neg_prob();
-				
-				//REPLACE THIS WITH THE ACTUAL SMOOTHING YOU FOUND!!
-				if(data->get_pos_prob() == 0) pos_prob += 5;
-				if(data->get_neg_prob() == 0) neg_prob += 5;
 			}
 		}
 
 		int most_probable_type = 0;
-		if(pos_prob < neg_prob) most_probable_type = 1;
+		if(pos_prob > neg_prob) most_probable_type = 1;
 
 		cout << "P: " << pos_prob << ", N: " << neg_prob << " -> " << most_probable_type << " vs " << type << "\n";
 

@@ -7,9 +7,10 @@ using namespace std;
 
 Trie::Trie(char c){
 	this->letter = c;
-	this->docs_letters[0] = 0;
+	this->word_count = 0;
+	//this->docs_letters[0] = 0;
 	this->docs_words[0] = 0;
-	this->docs_letters[1] = 0;
+	//this->docs_letters[1] = 0;
 	this->docs_words[1] = 0;
 	this->prob[0] = 0;
 	this->prob[1] = 0;
@@ -28,8 +29,13 @@ Trie* Trie::make_child(char c){
 	return new_trie;
 }
 
+Trie* Trie::add_word_root(string word,int type){
+	if(get_word(word) == NULL) word_count += 1;
+	add_word(word,type);
+}
+
 Trie* Trie::add_word(string word,int type){
-	docs_letters[type] += 1;
+	//docs_letters[type] += 1;
 	if(word.length() == 0){
 		docs_words[type] += 1;
 		return this;
@@ -51,19 +57,27 @@ Trie* Trie::get_word(string word){
 	return t->get_word(word);
 }
 
-void Trie::calc_data(int pos_num,int neg_num){
-	if(docs_words[0] != 0) prob[0] = log10 ( (double)docs_words[0] / (double)neg_num );
-	//if(docs_words[0] != 0) prob[0] = (double)docs_words[0] / (double)neg_num;
-	if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
-	//if(docs_words[1] != 0) prob[1] = (double)docs_words[1] / (double)pos_num;
+void Trie::calc_data(int pos_num,int neg_num,int wordnum){
+	if(wordnum == 0) wordnum = word_count;
+	//if(docs_words[0] != 0) 
+	prob[0] = log10 ( 
+		((double)docs_words[0] + 1) / (
+		(double)neg_num + wordnum + 1)
+	);
+	//if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
+	//if(docs_words[1] != 0) 
+	prob[1] = log10 ( 
+		((double)docs_words[1] + 1) / (
+		(double)pos_num + wordnum + 1)
+	);
 	for(int i = 0;i < childs.size();i++){
-		childs[i] -> calc_data(pos_num,neg_num);
+		childs[i] -> calc_data(pos_num,neg_num,word_count);
 	}
 }
 
 void Trie::print(string str){
 	str = str + letter;
-	cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] << " Letters: " << docs_letters[0] << ", " << docs_letters[1] << "\n";
+	cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] <<"\n";
 	for(int i = 0;i < childs.size();i++){
 		childs[i] -> print(str);
 	}
