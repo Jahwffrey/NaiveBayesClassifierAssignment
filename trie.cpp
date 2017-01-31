@@ -66,7 +66,7 @@ void Trie::calc_data(int pos_num,int neg_num,int wordnum){
 	if(wordnum == 0) wordnum = word_count;
 	//if(docs_words[0] != 0) 
 	for(int i = 0; i < 2;i++){
-		prob[i] = log10 ( 
+		prob[i] = log ( 
 			((double)word_occurs[i] + 1) / 
 			((double)word_nums[i] + (double)wordnum + 1)
 		);
