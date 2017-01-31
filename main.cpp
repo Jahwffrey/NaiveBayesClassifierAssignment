@@ -47,7 +47,7 @@ void train(char* train_file_name,Trie* trie,int* docs){
 			}
 			cout << "]\n";*/
 			for(int i = FIRSTWORD; i < WORDNUM;i++){
-				trie -> add_word(wrd[i],type);
+				trie -> add_word_root(wrd[i],type);
 			}
 		}
 

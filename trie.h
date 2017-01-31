@@ -11,8 +11,8 @@ class Trie{
 	char letter;
 	vector<Trie *> childs;
 	int word_count;
-	int docs_letters[2];
-	int docs_words[2];
+	int word_occurs[2];
+	int word_nums[2];
 	double prob[2];
 	Trie* get_child(char c);
 	Trie* make_child(char c);

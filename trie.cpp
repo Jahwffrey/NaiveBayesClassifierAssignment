@@ -9,11 +9,13 @@ Trie::Trie(char c){
 	this->letter = c;
 	this->word_count = 0;
 	//this->docs_letters[0] = 0;
-	this->docs_words[0] = 0;
+	this->word_occurs[0] = 0;
 	//this->docs_letters[1] = 0;
-	this->docs_words[1] = 0;
+	this->word_occurs[1] = 0;
 	this->prob[0] = 0;
 	this->prob[1] = 0;
+	this->word_nums[0] = 0;
+	this->word_nums[1] = 0;
 }
 
 Trie* Trie::get_child(char c){
@@ -37,7 +39,7 @@ Trie* Trie::add_word_root(string word,int type){
 Trie* Trie::add_word(string word,int type){
 	//docs_letters[type] += 1;
 	if(word.length() == 0){
-		docs_words[type] += 1;
+		word_occurs[type] += 1;
 		return this;
 	} else {
 		char c = word[0];
@@ -61,24 +63,24 @@ void Trie::calc_data(int pos_num,int neg_num,int wordnum){
 	if(wordnum == 0) wordnum = word_count;
 	//if(docs_words[0] != 0) 
 	prob[0] = log10 ( 
-		((double)docs_words[0] + 1) / (
-		(double)neg_num + wordnum + 1)
+		((double)word_occurs[0] + 1) / 
+		((double)neg_num + (double)wordnum + 1)
 	);
 	//if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
 	//if(docs_words[1] != 0) 
 	prob[1] = log10 ( 
-		((double)docs_words[1] + 1) / (
-		(double)pos_num + wordnum + 1)
+		((double)word_occurs[1] + 1) / 
+		((double)pos_num + (double)wordnum + 1)
 	);
 	for(int i = 0;i < childs.size();i++){
-		childs[i] -> calc_data(pos_num,neg_num,word_count);
+		childs[i] -> calc_data(pos_num,neg_num,wordnum);
 	}
 }
 
 void Trie::print(string str){
 	str = str + letter;
-	if(docs_words[0] != 0 || docs_words[1] != 0){
-		cout << str << " - Words: " << docs_words[0] << ", " << docs_words[1] <<"\n";
+	if(word_occurs[0] != 0 || word_occurs[1] != 0){
+		cout << str << " - Words: " << word_occurs[0] << ", " << word_occurs[1] <<"\n";
 	}
 	for(int i = 0;i < childs.size();i++){
 		childs[i] -> print(str);
@@ -87,7 +89,7 @@ void Trie::print(string str){
 
 void Trie::print_probs(string str){
 	str = str + letter;
-	if(docs_words[0] != 0 || docs_words[1] != 0){
+	if(word_occurs[0] != 0 || word_occurs[1] != 0){
 		cout << str + " - N: " << prob[0] << " P: " << prob[1] << endl;
 	}
 	for(int i = 0;i < childs.size();i++){
