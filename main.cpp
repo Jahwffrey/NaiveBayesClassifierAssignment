@@ -9,7 +9,8 @@
 #include "trie.h"
 #include <ctime>
 
-#define WORDNUM 2
+#define WORDNUM 3
+#define FIRSTWORD 1
 using namespace std;
 
 //Consider sorting tries
@@ -38,9 +39,16 @@ void train(char* train_file_name,Trie* trie,int* docs){
 		docs[type] += 1;
 		Review* current = new Review(rev);		
 
-		string wrd;
+		string wrd[WORDNUM];
 		while(current->next_word(wrd,WORDNUM)){
-			trie -> add_word(wrd,type);
+			/*cout << "[";
+			for(int i = 0;i < WORDNUM;i++){
+				cout << wrd[i] << ",";
+			}
+			cout << "]\n";*/
+			for(int i = FIRSTWORD; i < WORDNUM;i++){
+				trie -> add_word(wrd[i],type);
+			}
 		}
 
 		delete(current);
@@ -62,14 +70,16 @@ void test(char * test_file_name,Trie* trie,int* docs,int& correct_num,int& incor
 
 		double pos_prob = 0;
 		double neg_prob = 0;
-		string wrd;
+		string wrd[WORDNUM];
 
 		//classify
 		while(current->next_word(wrd,WORDNUM)){
-			Trie* data = trie->get_word(wrd);
-			if(data != NULL){
-				pos_prob += data->get_pos_prob();
-				neg_prob += data->get_neg_prob();
+			for(int i = FIRSTWORD;i < WORDNUM;i++){
+				Trie* data = trie->get_word(wrd[i]);
+				if(data != NULL){
+					pos_prob += data->get_pos_prob();
+					neg_prob += data->get_neg_prob();
+				}
 			}
 		}
 

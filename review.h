@@ -10,7 +10,7 @@ class Review{
 	int len;
 	bool check_char(char c);
  public:
-	bool next_word(std::string &out,int word_num);
+	bool next_word(std::string* out,int word_num);
 	Review(std::string txt);
 };
 

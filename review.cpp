@@ -16,8 +16,8 @@ Review::Review(string txt){
 	this->len = txt.length() - 2;
 }
 
-bool Review::next_word(string &out, int word_num){
-	out = "";
+bool Review::next_word(string* outarr, int word_num){
+	string out = "";
 	if(head >= len) return false;
 	int word_count = 0;
 	int index = head;
@@ -25,6 +25,7 @@ bool Review::next_word(string &out, int word_num){
 		char c = tolower(text[index]);
 		if(c == ' '){
 			if(word_count == 0) head = index + 1;
+			outarr[word_count] = out;
 			word_count += 1;
 		}
 		if(check_char(c) && word_count < word_num) out = out + c;
@@ -33,6 +34,7 @@ bool Review::next_word(string &out, int word_num){
 			c = tolower(text[index]);
 			word_count = word_num;
 			if(check_char(c)) out = out + c;
+			outarr[word_count - 1] = out;
 			head = index + 1;
 		}
 	}
