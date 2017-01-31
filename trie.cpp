@@ -31,25 +31,25 @@ Trie* Trie::make_child(char c){
 	return new_trie;
 }
 
-Trie* Trie::add_word_root(string word,int type){
-	word_nums[type] += 1;
-	if(get_word(word) == NULL){
-		word_count += 1;
-	}
-	add_word(word,type);
+Trie* Trie::add_word_root(string word,int type,double value){
+	word_nums[type] += value;
+	//if(get_word(word) == NULL){
+		word_count += value;
+	//}
+	add_word(word,type,value);
 }
 
-Trie* Trie::add_word(string word,int type){
+Trie* Trie::add_word(string word,int type,double value){
 	//docs_letters[type] += 1;
 	if(word.length() == 0){
-		word_occurs[type] += 1;
+		word_occurs[type] += value;
 		return this;
 	} else {
 		char c = word[0];
 		Trie* t = get_child(c);
 		if(t == NULL) t = make_child(c);
 		word.erase(word.begin());
-		return t->add_word(word,type);
+		return t->add_word(word,type,value);
 	}
 }
 

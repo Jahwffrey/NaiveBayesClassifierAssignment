@@ -10,16 +10,16 @@ class Trie{
  private:
 	char letter;
 	vector<Trie *> childs;
-	int word_count;
-	int word_occurs[2];
-	int word_nums[2];
+	double word_count;
+	double word_occurs[2];
+	double word_nums[2];
 	double prob[2];
 	Trie* get_child(char c);
 	Trie* make_child(char c);
  public:
 	Trie(char c);
-	Trie* add_word_root(string word,int type);
-	Trie* add_word(string word,int type);
+	Trie* add_word_root(string word,int type,double value);
+	Trie* add_word(string word,int type,double value);
 	Trie* get_word(string word);
 	void get_type(int type);
 	void print(string str);
