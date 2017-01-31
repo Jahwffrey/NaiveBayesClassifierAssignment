@@ -32,7 +32,10 @@ Trie* Trie::make_child(char c){
 }
 
 Trie* Trie::add_word_root(string word,int type){
-	if(get_word(word) == NULL) word_count += 1;
+	word_nums[type] += 1;
+	if(get_word(word) == NULL){
+		word_count += 1;
+	}
 	add_word(word,type);
 }
 
@@ -62,16 +65,18 @@ Trie* Trie::get_word(string word){
 void Trie::calc_data(int pos_num,int neg_num,int wordnum){
 	if(wordnum == 0) wordnum = word_count;
 	//if(docs_words[0] != 0) 
-	prob[0] = log10 ( 
-		((double)word_occurs[0] + 1) / 
-		((double)neg_num + (double)wordnum + 1)
-	);
+	for(int i = 0; i < 2;i++){
+		prob[i] = log10 ( 
+			((double)word_occurs[i] + 1) / 
+			((double)word_nums[i] + (double)wordnum + 1)
+		);
+	}
 	//if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
 	//if(docs_words[1] != 0) 
-	prob[1] = log10 ( 
+	/*prob[1] = log10 ( 
 		((double)word_occurs[1] + 1) / 
 		((double)pos_num + (double)wordnum + 1)
-	);
+	);*/
 	for(int i = 0;i < childs.size();i++){
 		childs[i] -> calc_data(pos_num,neg_num,wordnum);
 	}
