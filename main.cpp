@@ -86,7 +86,7 @@ void test(char * test_file_name,Trie* trie,int* docs,int& correct_num,int& incor
 		int most_probable_type = 0;
 		if(pos_prob > neg_prob) most_probable_type = 1;
 		if(prnt){
-			cout << "P: " << pos_prob << ", N: " << neg_prob << " = ";
+			//cout << "P: " << pos_prob << ", N: " << neg_prob << " = ";
 			cout << most_probable_type << endl;
 		}
 
