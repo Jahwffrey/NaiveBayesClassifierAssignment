@@ -24,7 +24,7 @@ class Trie{
 	void get_type(int type);
 	void print(string str);
 	void print_probs(string str);
-	void calc_data(int pos_num,int neg_num,int word_num);
+	void calc_data(int pos_num,int neg_num,int word_num,double word_nums_p,double word_nums_n);
 	double get_pos_prob();
 	double get_neg_prob();
 };

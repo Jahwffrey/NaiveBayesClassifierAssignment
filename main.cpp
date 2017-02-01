@@ -54,7 +54,7 @@ void train(char* train_file_name,Trie* trie,int* docs){
 		delete(current);
 	}
 
-	trie->calc_data(docs[1],docs[0],0);
+	trie->calc_data(docs[1],docs[0],0,0,0);
 }
 
 void test(char * test_file_name,Trie* trie,int* docs,int& correct_num,int& incorrect_num,bool prnt){
@@ -85,7 +85,10 @@ void test(char * test_file_name,Trie* trie,int* docs,int& correct_num,int& incor
 
 		int most_probable_type = 0;
 		if(pos_prob > neg_prob) most_probable_type = 1;
-		if(prnt) cout << most_probable_type << endl;
+		if(prnt){
+			cout << "P: " << pos_prob << ", N: " << neg_prob << " = ";
+			cout << most_probable_type << endl;
+		}
 
 		if(most_probable_type == type){
 			correct_num += 1;

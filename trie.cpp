@@ -62,23 +62,45 @@ Trie* Trie::get_word(string word){
 	return t->get_word(word);
 }
 
-void Trie::calc_data(int pos_num,int neg_num,int wordnum){
-	if(wordnum == 0) wordnum = word_count;
+void Trie::calc_data(int pos_num,int neg_num,int wordnum,double word_nums_p,double word_nums_n){
+	if(wordnum == 0){
+		wordnum = word_count;
+		word_nums_p = word_nums[1];
+		word_nums_n = word_nums[0];
+	}
+
+	word_nums[1] = word_nums_p;
+	word_nums[0] = word_nums_n;
 	//if(docs_words[0] != 0) 
 	for(int i = 0; i < 2;i++){
-		prob[i] = log ( 
+		prob[i] = //log ( 
 			((double)word_occurs[i] + 1) / 
 			((double)word_nums[i] + (double)wordnum + 1)
-		);
+		;//);
+		//cout << word_nums[i] << "!\n";
 	}
-	//if(docs_words[1] != 0) prob[1] = log10 ( (double)docs_words[1] / (double)pos_num );
-	//if(docs_words[1] != 0) 
-	/*prob[1] = log10 ( 
-		((double)word_occurs[1] + 1) / 
-		((double)pos_num + (double)wordnum + 1)
-	);*/
+
+	//idf
+	/*if(word_occurs[1] != 0){
+		prob[1] = prob[1] * ( 1 + log((double)pos_num/(double)word_occurs[1]));
+	}
+	
+	if(word_occurs[0] != 0){
+		prob[0] = prob[0] * ( 1 + log((double)neg_num/word_occurs[0]));
+	}*/
+
+	//int cutoff = 50;
+	//if(word_occurs[0] >= cutoff && word_occurs[1] >= cutoff && fabs(word_occurs[0] - word_occurs[1]) < cutoff){
+		//prob[0] = 0;
+		//prob[1] = 0;
+	//}
+	
+	for(int i = 0; i < 2;i++){
+		prob[i] = log10 ( prob[i] );
+	}
+
 	for(int i = 0;i < childs.size();i++){
-		childs[i] -> calc_data(pos_num,neg_num,wordnum);
+		childs[i] -> calc_data(pos_num,neg_num,wordnum,word_nums_p,word_nums_n);
 	}
 }
 
