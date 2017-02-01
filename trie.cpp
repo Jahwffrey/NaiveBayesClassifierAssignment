@@ -89,7 +89,7 @@ void Trie::calc_data(int pos_num,int neg_num,int wordnum,double word_nums_p,doub
 		prob[0] = prob[0] * ( 1 + log((double)neg_num/word_occurs[0]));
 	}*/
 
-	int cutoff = 50;
+	int cutoff = 1000;
 	if(word_occurs[0] >= cutoff && word_occurs[1] >= cutoff && fabs(word_occurs[0] - word_occurs[1]) < cutoff){
 		prob[0] = 1;
 		prob[1] = 1;
