@@ -1,3 +1,8 @@
+//John Thomason
+//ID 3058344
+
+
+
 #ifndef _REVIEW_H
 #define _REVIEW_H
 

@@ -1,3 +1,8 @@
+//John Thomason
+//ID 3058344
+
+
+
 #include <iostream>
 #include <string>
 #include "trie.h"
@@ -8,9 +13,7 @@ using namespace std;
 Trie::Trie(char c){
 	this->letter = c;
 	this->word_count = 0;
-	//this->docs_letters[0] = 0;
 	this->word_occurs[0] = 0;
-	//this->docs_letters[1] = 0;
 	this->word_occurs[1] = 0;
 	this->prob[0] = 0;
 	this->prob[1] = 0;
@@ -33,9 +36,7 @@ Trie* Trie::make_child(char c){
 
 Trie* Trie::add_word_root(string word,int type,double value){
 	word_nums[type] += value;
-	//if(get_word(word) == NULL){
-		word_count += value;
-	//}
+	word_count += value;
 	add_word(word,type,value);
 }
 
@@ -82,11 +83,11 @@ void Trie::calc_data(int pos_num,int neg_num,int wordnum,double word_nums_p,doub
 
 	//idf
 	/*if(word_occurs[1] != 0){
-		prob[1] = prob[1] * ( 1 + log((double)pos_num/(double)word_occurs[1]));
+		prob[1] = prob[1] * ( 1 + log2((double)pos_num/(double)word_occurs[1]));
 	}
 	
 	if(word_occurs[0] != 0){
-		prob[0] = prob[0] * ( 1 + log((double)neg_num/word_occurs[0]));
+		prob[0] = prob[0] * ( 1 + log2((double)neg_num/(double)word_occurs[0]));
 	}*/
 
 	int cutoff = 1000;
@@ -129,4 +130,20 @@ double Trie::get_pos_prob(){
 }
 double Trie::get_neg_prob(){
 	return prob[0];
+}
+
+double Trie::print_most_important(string str,double max,int type,string ignore){
+	str = str + letter;
+	if(!(str.compare(ignore) == 0)){
+		//double nmax = prob[type] - prob[(type + 1) % 2];
+		double nmax = prob[type] - prob[(type + 1) % 2];
+		if(nmax > max || max > 4 || nmax > 3.4){
+			cout << str << ": " << nmax << "\n";
+			max = nmax;
+		}
+	}
+	for(int i = 0;i < childs.size();i++){
+		max = childs[i] -> print_most_important(str,max,type,ignore);
+	}
+	return max;
 }

@@ -1,3 +1,8 @@
+//John Thomason
+//ID 3058344
+
+
+
 #include <fstream>
 #include <iostream>
 #include <string>

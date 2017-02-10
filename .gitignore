@@ -1,4 +1,5 @@
 training.txt
 testing.txt
 *.o
+*.pdf
 NaiveBayesClassifier

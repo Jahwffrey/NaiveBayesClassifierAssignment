@@ -1,3 +1,8 @@
+//John Thomason
+//ID 3058344
+
+
+
 #ifndef _TRIE_H
 #define _TRIE_H
 
@@ -24,6 +29,7 @@ class Trie{
 	void get_type(int type);
 	void print(string str);
 	void print_probs(string str);
+	double print_most_important(string str,double max,int type,string ignore);
 	void calc_data(int pos_num,int neg_num,int word_num,double word_nums_p,double word_nums_n);
 	double get_pos_prob();
 	double get_neg_prob();

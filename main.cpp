@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "review.h"
@@ -139,10 +140,14 @@ int main(int argc,char** argv){
 	test_2_perc = 100 * (double)correct_num / (double)(correct_num + incorrect_num);
 	test_2_end = clock();
 
+	//cout << fixed;
+	cout << setprecision(4);
+
 	cout << (train_end - train_start)/(double)CLOCKS_PER_SEC << " seconds (training)\n";
 	cout << (test_2_end - train_end)/(double)CLOCKS_PER_SEC << " seconds (labeling)\n";
 	cout << test_2_perc << " (training)\n";
 	cout << test_perc << " (testing)\n";
 
+	//trie->print_most_important("",2001,1,"");
 	return 1;
 }
